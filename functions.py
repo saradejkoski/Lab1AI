@@ -29,7 +29,7 @@ def heuristic(puzzle, item_total_calc, total_calc):
     return total_calc(t)
 
 
-def is_puzzle_solvable(array):
+def is_puzzle_solvable(array):  # checks if puzzle is solvable, uses inversion count
     inv_count = 0
     empty_puzzle = []
 
@@ -41,7 +41,7 @@ def is_puzzle_solvable(array):
             if empty_puzzle[j] and empty_puzzle[i] and empty_puzzle[i] > empty_puzzle[j]:
                 inv_count += 1
 
-    # return if inversion count is even.
+    # return if inversion count is even. --> solvable, if inversion count is uneven --> not solvable
     return inv_count % 2 == 0
 
 
@@ -74,13 +74,6 @@ def main():
     p.shuffle(12)
     print(p)
     p = start_state
-
-    # path, count = p.solve_a_star(manhattan_h)
-    # path.reverse()
-    # for i in path:
-    # print(i)
-
-    # print(goal_state)
 
     if is_puzzle_solvable(start_state):
         print("Solvable")

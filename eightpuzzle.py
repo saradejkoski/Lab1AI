@@ -1,15 +1,4 @@
-
-
-# Solves a randomized 8-puzzle using A* algorithm with plug-in heuristics
-
 import random
-
-
-
-
-
-
-# from functions import hamming_h, manhattan_h
 
 # define start state that is later overwritten with the random generated puzzle, (used to check if solvable)
 start_state = [[0, 0, 0],
@@ -80,10 +69,10 @@ class EightPuzzle:
         return empty
 
     def generate_moves(self):
-        free = self.get_legal_moves()
-        zero = self.find(0)
+        free = self.get_legal_moves()  # check at get_legal_moves
+        zero = self.find(0)  # check at def find
 
-        def swap_and_clone(a, b):
+        def swap_and_clone(a, b):  # check at def find and def swap
             p = self.clone()
             p.swap(a, b)
             p.depth = self.depth + 1
@@ -91,8 +80,9 @@ class EightPuzzle:
             return p
 
         return map(lambda pair: swap_and_clone(zero, pair), free)
+        # computes a function using the arguments (swap_and_clone, and free), stop when the shortest iterable is exhausted
 
-    def create_solution_path(self, path):
+    def create_solution_path(self, path):  # creates solution path with recursion
         if self.parent is None:
             return path
         else:
@@ -105,22 +95,21 @@ class EightPuzzle:
         """
 
         def is_solved(puzzle):
-            return puzzle.adj_matrix == goal_state
+            return puzzle.adj_matrix == goal_state  # if the puzzle matches the goal state --> completed
 
         open_l = [self]
         closed_l = []
         move_count = 0
         while len(open_l) > 0:
             x = open_l.pop(0)
-            move_count += 1
+            move_count += 1     # counts the moves
             if is_solved(x):
-                if len(closed_l) > 0:
+                if len(closed_l) > 0:   # checks if solved, else returns to default state
                     return x.create_solution_path([]), move_count
                 else:
                     return [x]
 
             succ = x.generate_moves()
-            # idx_open = idx_closed = -1
             for move in succ:
                 # have we already seen this node?
                 idx_open = index(move, open_l)
@@ -151,7 +140,7 @@ class EightPuzzle:
         # if finished state not found, return failure
         return [], 0
 
-    def shuffle(self, step_count):
+    def shuffle(self, step_count):  # method for the random state
         for i in range(step_count):
             row, col = self.find(0)
             empty = self.get_legal_moves()
@@ -183,7 +172,3 @@ class EightPuzzle:
         temp = self.peek(*pos_a)
         self.poke(pos_a[0], pos_a[1], self.peek(*pos_b))
         self.poke(pos_b[0], pos_b[1], temp)
-
-
-
-

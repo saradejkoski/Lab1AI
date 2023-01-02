@@ -1,4 +1,3 @@
-
 import time
 
 from eightpuzzle import EightPuzzle, start_state, goal_state
@@ -8,10 +7,6 @@ from functions import is_puzzle_solvable, manhattan_h, hamming_h
 # ---------------------------------------------------------------
 # Defines menu that is printed for the user to choose from
 # ---------------------------------------------------------------
-
-
-
-
 def menu():
     print("---------------------------------------------------------------------------------")
     print("Eight Puzzle Implementation using Heuristic Search: ")
@@ -30,11 +25,11 @@ def menu():
 def main():
     p = EightPuzzle()
 
-    def print_random_puzzle():
+    def print_random_puzzle():  # prints out random puzzle for 1.
         p.shuffle(20)
         print(p)
 
-    def check_if_solvable():
+    def check_if_solvable():  # checks if the puzzle is solvable
         p = start_state
 
         if is_puzzle_solvable(start_state):
@@ -42,42 +37,37 @@ def main():
         else:
             print("Not Solvable")
 
-    def solve_puzzle_with_manhattan():
+    def solve_puzzle_with_manhattan():  # solving puzzle with manhattan and the time it needs for that
         start_time = time.time()
-        print("---------------------------------------------------------------------------------")
         path, count = p.solve_a_star(manhattan_h)
         print("Solved with Manhattan distance exploring", count, "states")
-        print("--- %s milliseconds for MANHATTAN ---" % ((time.time() - start_time) * 1000))
-        print("---------------------------------------------------------------------------------")
+        print("%s milliseconds for MANHATTAN " % ((time.time() - start_time) * 1000))
 
-    def solve_puzzle_with_hamming():
+    def solve_puzzle_with_hamming():  # solving puzzle with hamming and the time it needs for that
         start_time = time.time()
-        print("---------------------------------------------------------------------------------")
         path, count = p.solve_a_star(hamming_h)
         print("Solved with Hamming distance exploring", count, "states")
-        print("--- %s milliseconds for HAMMING ---" % ((time.time() - start_time) * 1000))
-        print("---------------------------------------------------------------------------------")
+        print("%s milliseconds for HAMMING" % ((time.time() - start_time) * 1000))
 
-    def compare_results():
+    def compare_results():  # comparing the results of the two methods manhattan and hamming
         print("---------------------------------------------------------------------------------")
         # Measure Manhattan Complexity:
         start_time = time.time()
         path, count = p.solve_a_star(manhattan_h)
-        print("--- %s milliseconds for MANHATTAN ---" % ((time.time() - start_time) * 1000))
+        print("%s milliseconds for MANHATTAN" % ((time.time() - start_time) * 1000))
         print("Solved with Manhattan distance exploring", count, "states")
         print("---------------------------------------------------------------------------------")
         # Measure Hamming Complexity:
         start_time = time.time()
         path, count = p.solve_a_star(hamming_h)
-        print("--- %s milliseconds for HAMMING ---" % ((time.time() - start_time) * 1000))
+        print("%s milliseconds for HAMMING" % ((time.time() - start_time) * 1000))
         print("Solved with Hamming distance exploring", count, "states")
-        print("---------------------------------------------------------------------------------")
 
         # states: count all the possible nodes that are generated to solve the puzzle
 
     menu()
 
-    choice = (input("Enter an integer between 1-7: "))
+    choice = (input("Enter an integer between 1-7: "))   # method to print when entering a specific number
 
     run = True
     while run:
@@ -94,12 +84,12 @@ def main():
             menu()
             choice = (input("Enter an integer between 1-7: "))
         elif choice == "4":
-            print("Solved with Manhattan:")
+            print("Manhattan:")
             solve_puzzle_with_manhattan()
             menu()
             choice = (input("Enter an integer between 1-7: "))
         elif choice == "5":
-            print("Solved with Hamming:")
+            print("Hamming:")
             solve_puzzle_with_hamming()
             menu()
             choice = (input("Enter an integer between 1-7: "))
